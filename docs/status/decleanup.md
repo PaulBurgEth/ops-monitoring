@@ -1,12 +1,12 @@
 # decleanup.net — status
 
-- **Org:** DeCleanup-Network (⚠️ this account has **member**, not admin/owner access)
-- **Repo:** DeCleanup-Network/decleanup-landing-standalone *(production repo to confirm with an owner)*
+- **Org:** DeCleanup-Network (✅ this account has repo **admin** on `decleanup-landing-standalone`
+  and `decleanup-main-celo` — enough for PRs, Dependabot, secret-scanning; no cofounder needed)
+- **Repo:** DeCleanup-Network/decleanup-landing-standalone *(confirm this is the decleanup.net prod repo)*
 - **Live:** https://www.decleanup.net (Vercel). ⚠️ apex `https://decleanup.net` currently fails TLS
   (cert SAN mismatch) — monitoring uses the `www.` canonical host.
-- **CI:** to confirm per repo
-- **Sentry:** ✅ project `decleanup` + alert rules — SDK install pending (PR; needs owner to merge)
-- **Deploy:** Vercel `decleanup-network` (needs `VERCEL_TOKEN`)
+- **Sentry:** ✅ project `decleanup` + alert rules (static site — SDK optional, low value)
+- **Deploy:** Vercel `decleanup-network` (CLI-direct; needs `VERCEL_TOKEN` for the report's deploy column)
 - **Uptime:** ✅ www HTTP 200
-- **Dependabot / secret scanning:** ❌ — **requires a DeCleanup-Network owner** to enable + accept PRs
-- **Next:** owner to confirm prod repo + canonical host + TLS fix; then Sentry SDK + `dependabot.yml` PR (fork if no write).
+- **Dependabot:** ✅ config PR merged (#1); alerts + auto-fixes enabled
+- **Next:** fix the apex TLS cert; confirm prod repo.

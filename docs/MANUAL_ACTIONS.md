@@ -1,43 +1,55 @@
 # Manual actions — what Paul needs to do
 
-Everything in this list needs a human (account access, billing, domain ownership). Add each key in
-**GitHub → this repo → Settings → Secrets and variables → Actions → New repository secret** using the
-exact secret name shown. The system already works with whatever is set; missing keys just show as
-"not configured" in the weekly email.
+Status as of the rollout. The monitoring system itself is **live** (weekly email + CI/deploy/uptime
+watchers running). The items below either need a key only you can create, or a deploy only you can run.
 
-## Already done ✅
-- `GH_MONITOR_PAT`, `SENTRY_AUTH_TOKEN`, `RESEND_API_KEY` — provided and stored as secrets.
-- 7 Sentry projects exist with "New issue → email" and "Error spike → email" alert rules; alerts go
-  to yanapshu@gmail.com (org owner).
+> **Note on deploys:** Vercel projects here are deployed **directly via the Vercel CLI** (not synced
+> to GitHub). So merging a PR does **not** deploy anything — you must run your normal `vercel --prod`
+> for the app to pick up merged changes (e.g. the Sentry integration).
 
-## To add (free)
-1. **`VERCEL_TOKEN`** — Vercel → Account Settings → Tokens → Create. Scope: team
-   `paulburgeths-projects`, read access. Enables deploy status + prod-deploy-failure alerts.
-2. **`PAGESPEED_API_KEY`** — Google Cloud Console → APIs & Services → enable *PageSpeed Insights API*
-   → Credentials → API key. Enables weekly Core Web Vitals.
-3. **`GCP_SA_JSON`** — Google Cloud Console:
-   - Enable *Google Analytics Data API* and *Search Console API*.
-   - Create a **service account**, create a JSON key, paste the whole JSON as this secret.
-   - In **Search Console**, add the service-account email as a user on each verified property.
-   - In **GA4** (Admin → Property Access), add the service-account email as **Viewer** on each property.
-   - Then fill each project's `ga4PropertyId` in `src/config/projects.json` (Admin → Property Settings →
-     Property ID, a number like `123456789`). GA4 traffic only reports where a property id is set.
-4. **`BETTERSTACK_API_TOKEN`** — Better Stack → free account → API token. Then run
-   `node scripts/setup-betterstack.mjs` (creates 7 HTTP monitors + email-on-down policy).
-5. **`GMAIL_OAUTH`** *(Phase 2, optional)* — a Gmail OAuth refresh-token JSON so the report can parse
-   the weekly `sa@ahrefs.com` Site Audit emails. Alternatively set a Gmail filter that forwards them.
+---
 
-## Owner / account actions (no secret)
-6. **Rotate the 3 pasted secrets** after you've confirmed everything works — they were shared in chat.
-   Replace `GH_MONITOR_PAT` with a **fine-grained PAT** limited to the 4 orgs' repos, read-only on
-   contents/metadata/actions (plus repo-creation if you want me to manage repos).
-7. **decleanup.net** — you only have *member* access to `DeCleanup-Network`. A DeCleanup **owner**
-   must (a) confirm which repo/Vercel project serves the live site, (b) enable Dependabot + secret
-   scanning, (c) allow the monitoring PRs (or grant write so no fork is needed). Also: the apex
-   `decleanup.net` has a TLS certificate mismatch — fix the cert or confirm `www.` is canonical.
-8. **GA4 properties** — for the 6 sites without a GA4 tag, create a GA4 property + install the tag if
-   you want traffic monitoring (helprentphangan.com already has `G-MDEKMMMN2F`). This is a GA UI step.
+## 1. Just provide an API token (easiest — paste it, or add as a repo secret)
+Add each in **GitHub → PaulBurgEth/ops-monitoring → Settings → Secrets and variables → Actions**.
+Each one lights up a section of the weekly report; missing ones simply show "not configured".
 
-## Out-of-scope security note
-`PaulBurgEth/helprentphangan.com/.env.example` contains real-looking WasenderAPI keys. Consider
-rotating them and replacing with placeholders.
+| Secret | Where to get it | Unlocks |
+|---|---|---|
+| `VERCEL_TOKEN` | Vercel → Account Settings → Tokens → Create | prod-deploy status + deploy-failure alerts |
+| `PAGESPEED_API_KEY` | Google Cloud Console → enable *PageSpeed Insights API* → API key | Core Web Vitals |
+| `BETTERSTACK_API_TOKEN` | Better Stack (free account) → API token | uptime monitors + real-time down alerts |
+| `GCP_SA_JSON` | Google Cloud service account JSON (GA4 Data API + Search Console API enabled) | SEO indexing + traffic/anomaly |
+
+✅ Already provided & set: `GH_MONITOR_PAT`, `SENTRY_AUTH_TOKEN`, `RESEND_API_KEY`.
+
+## 2. Deploys you run (CLI-direct — only you know each project's correct context)
+- **paulburg.com** — already deployed with Sentry. ✅ Done.
+- **ecosynthesisx** — merge PR #13 (lockfile fix) first, then `vercel --prod`. (Sentry was reverted; re-add later once green.)
+- **regenbazaar** — Sentry code is on `main`; run your normal `vercel --prod` to activate it.
+- **VitaCrypt** — Sentry already in the code; deploy frontend + backend after setting env (below).
+- **helprentphangan** — deploys via its own pipeline (already ran green on merge); set `SENTRY_DSN` then redeploy.
+
+## 3. Set Sentry DSN env vars (where I couldn't)
+I already set the DSN in Vercel for paulburg, ecosynthesisx, regenbazaar. You set these:
+- **VitaCrypt**: `SENTRY_DSN` (backend) + `VITE_SENTRY_DSN` (frontend) =
+  `https://359d39ff7e063fce16f638989503b4ce@o4510747696431104.ingest.us.sentry.io/4510747724087296`
+- **helprentphangan**: `SENTRY_DSN` in the prod server `.env` =
+  `https://335e1f8cc39f56496b575cd76c073cee@o4510747696431104.ingest.us.sentry.io/4511516193128448`
+
+## 4. Security (dashboard tasks only you can do)
+- **Rotate** the keys that were shared in chat: GitHub PAT (→ a least-privilege fine-grained PAT),
+  Sentry token, Resend key, and the 2 WasenderAPI keys.
+- Merge the open security PR: `helprentphangan.com#1` (WasenderAPI key redaction).
+
+## 5. Other
+- **decleanup.net**: the apex `https://decleanup.net` currently fails TLS (cert SAN mismatch) — fix the
+  cert (we monitor `www.decleanup.net` in the meantime). You have repo `admin`, so no cofounder needed.
+- **GA4 properties**: only helprentphangan.com has a GA4 tag. For traffic on the other sites, create
+  GA4 properties + install tags, then I'll fill `ga4PropertyId` in `src/config/projects.json`.
+
+---
+
+## What I'll do once you provide the tokens above
+- `BETTERSTACK_API_TOKEN` → I run `node scripts/setup-betterstack.mjs` (creates the 7 uptime monitors + down-alert policy).
+- `GCP_SA_JSON` → GA4 + Search Console data flows into the weekly report automatically.
+- `VERCEL_TOKEN` + `PAGESPEED_API_KEY` → deploy + CWV columns populate automatically.
