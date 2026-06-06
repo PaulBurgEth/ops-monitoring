@@ -1,0 +1,19 @@
+{
+  "name": "ops-monitoring",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Unified monitoring & weekly reporting across Paul Burg projects (CI, deploys, Sentry, SEO, Core Web Vitals, uptime).",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "weekly": "node src/weekly.js",
+    "ci-watch": "node src/ci-watch.js",
+    "deploy-watch": "node src/deploy-watch.js",
+    "doctor": "node src/doctor.js"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0"
+  }
+}

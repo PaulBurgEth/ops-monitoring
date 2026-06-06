@@ -1,0 +1,95 @@
+{
+  "reportTo": "yanapshu@gmail.com",
+  "reportFrom": "Ops Monitoring <reports@helprentphangan.com>",
+  "sentryOrg": "vitacrypt",
+  "sentryTeam": "vitacrypt",
+  "vercelTeam": "paulburgeths-projects",
+  "projects": [
+    {
+      "key": "regenbazaar",
+      "name": "Regen-Bazaar",
+      "primaryRepo": "Regen-Bazaar/regenbazaar-beta",
+      "repos": ["Regen-Bazaar/regenbazaar-beta", "Regen-Bazaar/landing", "Regen-Bazaar/.github"],
+      "site": "https://regenbazaar.com",
+      "uptimeUrl": "https://regenbazaar.com",
+      "vercelProject": "regenbazaar",
+      "sentryProject": "regenbazaar",
+      "gscSiteUrl": "https://regenbazaar.com/",
+      "ga4PropertyId": null
+    },
+    {
+      "key": "vitacrypt",
+      "name": "VitaCrypt",
+      "primaryRepo": "VitaCrypt-Labs/VitaCrypt",
+      "repos": ["VitaCrypt-Labs/VitaCrypt", "VitaCrypt-Labs/vitacrypt-landing"],
+      "site": "https://vitacrypt.xyz",
+      "uptimeUrl": "https://vitacrypt.xyz",
+      "vercelProject": "vitacrypt-landing",
+      "sentryProject": "vitacrypt",
+      "gscSiteUrl": "https://vitacrypt.xyz/",
+      "ga4PropertyId": null
+    },
+    {
+      "key": "helprentphangan",
+      "name": "helprentphangan",
+      "primaryRepo": "PaulBurgEth/helprentphangan.com",
+      "repos": ["PaulBurgEth/helprentphangan.com"],
+      "site": "https://helprentphangan.com",
+      "uptimeUrl": "https://helprentphangan.com",
+      "vercelProject": null,
+      "sentryProject": "helprentphangan",
+      "gscSiteUrl": "https://helprentphangan.com/",
+      "ga4PropertyId": null,
+      "notes": "Django app, not on Vercel; deploy tracking via CI only. GA4 tag G-MDEKMMMN2F live."
+    },
+    {
+      "key": "paulburg",
+      "name": "paulburg.com",
+      "primaryRepo": "PaulBurgEth/paulburg-com",
+      "repos": ["PaulBurgEth/paulburg-com"],
+      "site": "https://paulburg.com",
+      "uptimeUrl": "https://paulburg.com",
+      "vercelProject": "paulburg-com",
+      "sentryProject": "paulburg",
+      "gscSiteUrl": "https://paulburg.com/",
+      "ga4PropertyId": null
+    },
+    {
+      "key": "ecosynthesisx",
+      "name": "EcoSynthesisX",
+      "primaryRepo": "PaulBurgEth/ecosynthesisx",
+      "repos": ["PaulBurgEth/ecosynthesisx"],
+      "site": "https://ecosynthesisx.com",
+      "uptimeUrl": "https://ecosynthesisx.com",
+      "vercelProject": "ecosynthesisx-github-io",
+      "sentryProject": "ecosynthesisx",
+      "gscSiteUrl": "https://ecosynthesisx.com/",
+      "ga4PropertyId": null
+    },
+    {
+      "key": "degencurecenter",
+      "name": "DegenCureCenter",
+      "primaryRepo": "PaulBurgEth/degen-cure-center",
+      "repos": ["PaulBurgEth/degen-cure-center"],
+      "site": "https://degencurecenter.com",
+      "uptimeUrl": "https://degencurecenter.com",
+      "vercelProject": "degen-cure-center",
+      "sentryProject": "degencurecenter",
+      "gscSiteUrl": "https://degencurecenter.com/",
+      "ga4PropertyId": null
+    },
+    {
+      "key": "decleanup",
+      "name": "decleanup.net",
+      "primaryRepo": "DeCleanup-Network/decleanup-landing-standalone",
+      "repos": ["DeCleanup-Network/decleanup-landing-standalone"],
+      "site": "https://www.decleanup.net",
+      "uptimeUrl": "https://www.decleanup.net",
+      "vercelProject": "decleanup-network",
+      "sentryProject": "decleanup",
+      "gscSiteUrl": "https://decleanup.net/",
+      "ga4PropertyId": null,
+      "notes": "DeCleanup-Network = member-only access (PRs/security need an owner). Apex decleanup.net has a TLS SAN mismatch; canonical host is www.decleanup.net. Production repo to confirm."
+    }
+  ]
+}
