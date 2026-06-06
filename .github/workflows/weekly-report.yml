@@ -1,0 +1,33 @@
+name: Weekly report
+on:
+  schedule:
+    - cron: '0 1 * * 1' # Mondays 01:00 UTC (08:00 ICT)
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-report
+  cancel-in-progress: false
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci || npm install
+      - run: npm run weekly
+        env:
+          GH_MONITOR_PAT: ${{ secrets.GH_MONITOR_PAT }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          PAGESPEED_API_KEY: ${{ secrets.PAGESPEED_API_KEY }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          BETTERSTACK_API_TOKEN: ${{ secrets.BETTERSTACK_API_TOKEN }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          GCP_SA_JSON: ${{ secrets.GCP_SA_JSON }}
+          GMAIL_OAUTH: ${{ secrets.GMAIL_OAUTH }}

@@ -1,0 +1,28 @@
+name: CI watch (alert on red main)
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-watch
+  cancel-in-progress: true
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci || npm install
+      - run: npm run ci-watch
+        env:
+          WINDOW_MIN: '20'
+          GH_MONITOR_PAT: ${{ secrets.GH_MONITOR_PAT }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
