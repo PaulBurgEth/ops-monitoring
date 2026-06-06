@@ -28,9 +28,9 @@ export async function measure(url, strategy = 'mobile') {
 }
 
 export async function collect({ projects }) {
-  if (!hasSecret('PAGESPEED_API_KEY')) {
-    return { configured: false, note: 'PAGESPEED_API_KEY not set (works without key but rate-limited)', perProject: {} };
-  }
+  // PageSpeed works without an API key (just rate-limited). Run keyless when no key is set,
+  // and surface a note recommending a key for reliable CI quota.
+  const keyless = !hasSecret('PAGESPEED_API_KEY');
   const perProject = {};
   for (const p of projects) {
     try {
@@ -46,5 +46,9 @@ export async function collect({ projects }) {
       perProject[p.key] = { level: 'na', summary: `error: ${e.status || e.message}`, detail: {} };
     }
   }
-  return { configured: true, perProject };
+  return {
+    configured: true,
+    note: keyless ? 'running keyless — add PAGESPEED_API_KEY for reliable CI quota' : undefined,
+    perProject,
+  };
 }
