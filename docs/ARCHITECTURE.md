@@ -10,7 +10,8 @@ job runs on a schedule inside GitHub Actions in this public repo (public = unlim
 2. It runs a Node script that asks each external service for status, using API keys stored as
    **GitHub Actions secrets** (never in code).
 3. Results are turned into an HTML email and sent through **Resend** from
-   `reports@helprentphangan.com` to `yanapshu@gmail.com`.
+   `reports@helprentphangan.com` to the address in `reportTo`
+   (override with the `REPORT_TO` secret).
 
 ```
 GitHub Actions (cron)

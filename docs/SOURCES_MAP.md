@@ -11,7 +11,7 @@
 | SEO indexing / clicks | Search Console API | `GCP_SA_JSON` | weekly report | ☐ needs service account |
 | Traffic + anomaly | GA4 Data API | `GCP_SA_JSON` + `ga4PropertyId` | weekly report | ☐ needs SA + property ids |
 | SEO Site Audit | Ahrefs weekly email (Gmail API) | `GMAIL_OAUTH` | weekly report | ☐ Phase 2 |
-| Report + alert delivery | Resend | `RESEND_API_KEY` | email to yanapshu@gmail.com | ✅ key provided |
+| Report + alert delivery | Resend | `RESEND_API_KEY` | email to `reportTo` / `REPORT_TO` | ✅ key provided |
 
 ## Per-project coverage
 

@@ -8,7 +8,7 @@ export function loadConfig() {
   const raw = JSON.parse(readFileSync(join(__dirname, '../config/projects.json'), 'utf8'));
   return {
     cfg: {
-      reportTo: raw.reportTo,
+      reportTo: process.env.REPORT_TO || raw.reportTo,
       reportFrom: raw.reportFrom,
       sentryOrg: raw.sentryOrg,
       sentryTeam: raw.sentryTeam,

@@ -29,6 +29,9 @@ scripts/          one-off setup (Sentry projects, Better Stack monitors)
 ## Secrets (set in repo → Settings → Secrets and variables → Actions)
 See `docs/MANUAL_ACTIONS.md`. Nothing sensitive lives in code; all keys come from Actions secrets.
 
+Delivery address: `reportTo` in `src/config/projects.json`, overridden by the
+`REPORT_TO` environment variable or Actions secret when set.
+
 ## Run locally
 ```
 npm install
