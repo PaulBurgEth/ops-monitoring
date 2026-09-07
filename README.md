@@ -2,7 +2,7 @@
 
 Unified monitoring & weekly reporting across all projects: CI/CD, production deploys, runtime
 errors (Sentry), SEO (Search Console + Ahrefs), Core Web Vitals, and uptime — one **weekly email**
-plus **immediate alerts** to `yanapshu@gmail.com`. Free tiers only.
+plus **immediate alerts** to the maintainer's inbox. Free tiers only.
 
 ## How it works
 - Scheduled **GitHub Actions** run small Node scripts (no servers to host).
